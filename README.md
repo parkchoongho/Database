@@ -50,3 +50,32 @@ SELECT
 FROM products;
 ```
 
+### The WHERE Clause
+
+```sql
+SELECT * 
+FROM customers 
+WHERE state <> 'VA';
+
+SELECT * 
+FROM customers 
+WHERE state != 'VA';
+```
+
+위 쿼리와 아래 쿼리는 같은 결과를 가져옵니다.
+
+```sql
+SELECT * 
+FROM customers 
+WHERE birth_date > '1990-01-01';
+```
+
+예시: 1990년 1월 1일 이후에 태어난 고객들 가져오기
+
+```sql
+-- Get the orders placed this year
+SELECT * 
+FROM orders
+WHERE order_date >= "2019-01-01";
+```
+
