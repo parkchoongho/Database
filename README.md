@@ -79,3 +79,59 @@ FROM orders
 WHERE order_date >= "2019-01-01";
 ```
 
+### The AND, OR and NOT Operators
+
+```sql
+SELECT * 
+FROM customers
+WHERE birth_date > "1990-01-01" AND points > 1000;
+```
+
+```sql
+SELECT * 
+FROM customers
+WHERE birth_date > "1990-01-01" OR points > 1000;
+```
+
+```sql
+SELECT * 
+FROM customers
+WHERE birth_date > "1990-01-01" OR points > 1000 AND
+	state = 'VA';
+```
+
+AND operator는 OR operator에 선행해서 동작합니다.
+
+더 클린하게 논리구조를 표현하고 싶으면 아래와 같이 괄호를 사용할 수 있습니다.
+
+```sql
+SELECT * 
+FROM customers
+WHERE birth_date > "1990-01-01" OR (points > 1000 AND
+	state = 'VA');
+```
+
+```sql
+SELECT * 
+FROM customers
+WHERE NOT (birth_date > "1990-01-01" OR points > 1000);
+```
+
+위는 아래 쿼리와 같은 결과를 가져옵니다.
+
+```sql
+SELECT * 
+FROM customers
+WHERE birth_date <= "1990-01-01" AND points <= 1000);
+```
+
+```sql
+-- From the order_items table, get the items
+-- for order #6
+-- where the total price is greater than 30
+
+SELECT *
+FROM order_items
+WHERE order_id = 6 AND unit_price * quantity > 30;
+```
+
