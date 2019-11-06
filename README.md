@@ -219,7 +219,7 @@ FROM customers
 WHERE last_name LIKE '%y';
 ```
 
-```sql
+```mysql
 SELECT *
 FROM customers
 WHERE last_name LIKE 'b____y';
@@ -229,7 +229,7 @@ WHERE last_name LIKE 'b____y';
 
 위와 같이 코드를 작성하면 b로 시작하고 그 사이에 4개의 문자열이 오고 y로 끝나는 성을 가진 사람에 대한 데이터를 가져옵니다.
 
-```sql
+```mysql
 -- Get the customers whose
 -- 		addresses contain TRAIL or AVENUE
 
@@ -246,3 +246,82 @@ WHERE phone LIKE '%9';
 ```
 
 **LIKE**를 활용하는 방법은 다소 올드한 방법이고 모든 문자열 패턴에 대해 검색이 가능한 방법이 존재합니다.
+
+### The REGEXP Operator
+
+```mysql
+SELECT *
+FROM customers
+WHERE last_name LIKE '%field%';
+```
+
+위 쿼리는 **REGXEXP**를 활용해 다르게 작성할 수 있습니다.
+
+```mysql
+SELECT *
+FROM customers
+WHERE last_name REGEXP 'field';
+```
+
+```mysql
+SELECT *
+FROM customers
+WHERE last_name REGEXP '^field';
+-- field로 성이 시작하는 사람의 데이터를 가져옵니다.
+
+SELECT *
+FROM customers
+WHERE last_name REGEXP 'field$';
+-- field로 성이 끝나는 사람의 데이터를 가져옵니다.
+
+SELECT *
+FROM customers
+WHERE last_name REGEXP 'field|mac|rose';
+-- 성이 field, mac, rose 중 하나라도 포함하는 사람의 데이터를 가져옵니다.
+
+SELECT *
+FROM customers
+WHERE last_name REGEXP 'field$|mac|rose';
+-- 성이 field로 끝나거나 mac, rose 중 하나라도 포함하는 사람의 데이터를 가져옵니다.
+
+SELECT *
+FROM customers
+WHERE last_name REGEXP '[gim]e';
+-- 성이 ge, ie, me 중 하나라도 포함하는 사람의 데이터를 가져옵니다.
+
+SELECT *
+FROM customers
+WHERE last_name REGEXP '[a-h]e';
+-- ae ~ he까지 중 하나라도 포함하는 사람의 데이터를 가져옵니다.
+
+-- ^ beginning
+-- $ end
+-- | logical or
+-- [abcd]
+-- [a-d]
+```
+
+```mysql
+-- GET the customers whose
+
+-- 		first names are ELKA or AMBUR
+SELECT *
+FROM customers
+WHERE first_name REGEXP 'ELKA|AMBUR';
+
+--  	last names end with EY or ON
+SELECT *
+FROM customers
+WHERE last_name REGEXP 'EY$|ON$';
+
+-- 		last names start with MY or contains SE
+SELECT *
+FROM customers
+WHERE last_name REGEXP '^MY|SE';
+
+-- 		last names contain B followed by R or U
+SELECT *
+FROM customers
+WHERE last_name REGEXP 'B[RU]';
+```
+
