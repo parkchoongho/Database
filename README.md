@@ -183,7 +183,7 @@ FROM customers
 WHERE points BETWEEN 1000 AND 3000;
 ```
 
-BETWEEN은 이상 이하이므로 입력되어 있는 범위를 포함합니다.
+**BETWEEN**은 이상 이하이므로 입력되어 있는 범위를 포함합니다.
 
 ```sql
 -- Return customers born
@@ -193,3 +193,56 @@ FROM customers
 WHERE birth_date BETWEEN '1990-01-01' AND '2000-01-01';
 ```
 
+### The LIKE Operator
+
+만약 유저중에서 성이 'b'로 시작하는(대소문자 구별없이) 사람을 찾고 싶다고 하면 **LIKE**를 활용해서 쿼리를 작성할 수 있습니다.
+
+```sql
+SELECT *
+FROM customers
+WHERE last_name LIKE 'b%';
+```
+
+만일 성에 'b'가 존재하는 사람에 관한 데이터를 뽑고 싶다면 이처럼 쿼리를 작성하면 됩니다.
+
+```sql
+SELECT *
+FROM customers
+WHERE last_name LIKE '%b%';
+```
+
+성이 'y'로 끝나는 사람에 대한 데이터를 가져오고 싶으면 이렇게 쿼리를 작성합니다.
+
+```sql
+SELECT *
+FROM customers
+WHERE last_name LIKE '%y';
+```
+
+```sql
+SELECT *
+FROM customers
+WHERE last_name LIKE 'b____y';
+-- % any number of characters
+-- _ single character
+```
+
+위와 같이 코드를 작성하면 b로 시작하고 그 사이에 4개의 문자열이 오고 y로 끝나는 성을 가진 사람에 대한 데이터를 가져옵니다.
+
+```sql
+-- Get the customers whose
+-- 		addresses contain TRAIL or AVENUE
+
+SELECT * 
+FROM customers
+WHERE address LIKE '%trail%' OR 
+	  address LIKE '%avenue%';
+
+-- 		phone numbers end with 9
+
+SELECT *
+FROM customers
+WHERE phone LIKE '%9';
+```
+
+**LIKE**를 활용하는 방법은 다소 올드한 방법이고 모든 문자열 패턴에 대해 검색이 가능한 방법이 존재합니다.
