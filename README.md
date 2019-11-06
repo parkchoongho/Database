@@ -135,3 +135,35 @@ FROM order_items
 WHERE order_id = 6 AND unit_price * quantity > 30;
 ```
 
+### The IN Operator
+
+```sql
+SELECT *
+FROM customers
+WHERE state = 'VA' OR state = 'GA' OR state = 'FL';
+```
+
+위와 같이 쿼리를 작성하면 state가 'VA' 또는 'GA' 또는 'FL'인 데이터들이 뽑아져 나옵니다. 그런데 이렇게 쿼리를 작성하는 것은 다소 복잡해 보입니다. 아래와 같이 쿼리를 **IN** 을 활용해서 작성하면 더 간편하게 작성할 수 있습니다.
+
+```sql
+SELECT *
+FROM customers
+WHERE state IN ('VA', 'GA', 'FL');
+```
+
+ **NOT**과 결합해서 **IN**에 해당하지 않는 state를 가진 데이터를 가져올 수도 있습니다.
+
+```sql
+SELECT *
+FROM customers
+WHERE state NOT IN ('VA', 'GA', 'FL');
+```
+
+```sql
+-- Return products with
+-- 		quantity in stock equl to 49, 38, 72
+SELECT *
+FROM products
+WHERE quantity_in_stock IN (49, 38, 72);
+```
+
