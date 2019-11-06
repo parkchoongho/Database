@@ -169,3 +169,27 @@ WHERE quantity_in_stock IN (49, 38, 72);
 
 ### The BETWEEN Operator
 
+```sql
+SELECT *
+FROM customers
+WHERE points >= 1000 AND points <= 3000;
+```
+
+위와 같은 쿼리는 아래처럼 더 간편하게 작성할 수 있습니다.
+
+```sql
+SELECT *
+FROM customers
+WHERE points BETWEEN 1000 AND 3000;
+```
+
+BETWEEN은 이상 이하이므로 입력되어 있는 범위를 포함합니다.
+
+```sql
+-- Return customers born
+-- 		between 1/1/1990 and 1/1/2000
+SELECT *
+FROM customers
+WHERE birth_date BETWEEN '1990-01-01' AND '2000-01-01';
+```
+
