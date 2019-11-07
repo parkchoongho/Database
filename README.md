@@ -350,3 +350,62 @@ FROM orders
 WHERE shipped_date IS NULL;
 ```
 
+### The ORDER BY Operator
+
+```mysql
+SELECT *
+FROM customers
+ORDER BY first_name;
+```
+
+이렇게 쿼리를 작성하면 first_name에 대해 오름차순으로 데이터를 정렬해서 보여줍니다.
+
+내림차순으로 정렬하고 싶으면 아래와 같이 쿼리를 작성하면 됩니다.
+
+```mysql
+SELECT *
+FROM customers
+ORDER BY first_name DESC;
+```
+
+여러 column에 대해서도 정렬을 할 수 있습니다.
+
+```mysql
+SELECT *
+FROM customers
+ORDER BY state, first_name;
+```
+
+이렇게 되면 state에 대해 정렬을 먼저 한 후, 그 다음 first_name으로 정렬합니다. 
+
+각 column 다음에 **DESC**를 붙여 오름차순, 내림차순을 결정할 수 있습니다.
+
+```mysql
+SELECT *
+FROM customers
+ORDER BY state DESC, first_name;
+```
+
+추가적으로 MySQL에 있는 기능인데 MySQL에서는 해당 컬럼이 선택된 clause가 아닐지라도 그 column에 대해서 정렬할 수 있습니다.
+
+```mysql
+SELECT first_name, last_name
+FROM customers
+ORDER BY birth_date;
+```
+
+```mysql
+SELECT first_name, last_name
+FROM customers
+ORDER BY 1, 2;
+```
+
+여기서 1은 first_name을 의미하고 2는 last_name을 의미합니다.이러한 sort 방식은 지양해야 합니다. 왜냐하면 query를 어떻게 날리느냐에 따라 1, 2의 의미가 변화하기 때문입니다. 되도록이면 column 명을 입력하도록 합시다.
+
+```mysql
+SELECT *, quantity * unit_price AS total_price
+FROM order_items
+WHERE order_id = 2 
+ORDER BY total_price DESC;
+```
+
