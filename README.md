@@ -325,3 +325,28 @@ FROM customers
 WHERE last_name REGEXP 'B[RU]';
 ```
 
+### The IS NULL Operator
+
+NULL은 해당 데이터가 존재하지 않음을 의미합니다. 그렇다면, 특정 열에 해당하는 데이터가 없는 유저들에게 이메일을 보내고 싶을 때 어떻게 하면 될까요? **IS NULL**을 사용하면 편리하게 쿼리를 작성할 수 있습니다.
+
+```mysql
+SELECT *
+FROM customers
+WHERE phone IS NULL;
+```
+
+**NOT**을 활용하면 폰 번호가 있는 유저들 데이터를 가져올 수 있습니다.
+
+```mysql
+SELECT *
+FROM customers
+WHERE phone IS NOT NULL;
+```
+
+```mysql
+-- Get the orders that are not shipped
+SELECT *
+FROM orders
+WHERE shipped_date IS NULL;
+```
+
