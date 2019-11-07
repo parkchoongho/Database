@@ -350,7 +350,7 @@ FROM orders
 WHERE shipped_date IS NULL;
 ```
 
-### The ORDER BY Operator
+### The ORDER BY Clause
 
 ```mysql
 SELECT *
@@ -407,5 +407,35 @@ SELECT *, quantity * unit_price AS total_price
 FROM order_items
 WHERE order_id = 2 
 ORDER BY total_price DESC;
+```
+
+### The LIMIT Clause
+
+만약 가져오는 데이터중 3개만 보고 싶으면 어떻게 하면 될까요? **LIMIT**을 사용하면 가능합니다.
+
+```mysql
+SELECT *
+FROM customers
+LIMIT 3;
+```
+
+아래와 같이 쿼리를 작성하면 7~9번째 데이터를 가져올 수 있습니다.
+
+```mysql
+SELECT *
+FROM customers
+LIMIT 6, 3;
+```
+
+참고적으로 **LIMT**은 쿼리 마지막에 와야 합니다.
+
+**WHERE** => **ORDER BY** => **LIMIT**
+
+```mysql
+-- Get the top three loyal customers
+SELECT * 
+FROM customers
+ORDER BY points DESC
+LIMIT 3;
 ```
 
