@@ -555,3 +555,21 @@ join order_item_notes oin
     and oi.product_id = oin.product_id;
 ```
 
+### Implicit Join Syntax
+
+아래 두 쿼리는 같은 퀴리입니다.
+
+```mysql
+select *
+from orders o
+join customers c
+	on o.customer_id = c.customer_id;
+```
+
+```mysql
+select *
+from orders o, customers c
+where o.customer_id = c.customer_id;
+```
+
+아래와 같은 쿼리 방법을 implicit한 join이라고 합니다. 그런데 아래와 같은 방법을 사용하면 where 절을 빼먹으면 에러가 발생하지 않고 모든 orders와 customers간에 join이 발생하고 table이 생성됩니다. 이는 실수했다는 것을 시스템상에서 알기 힘들기 때문에 explicit하게 join을 작성하여 쿼리를 쓰는 것을 습관화하는 것이 좋습니다.
