@@ -496,3 +496,24 @@ ON oi.product_id = p.product_id;
 ```
 
 여기서 sql_inventory가 다른 database입니다. 이렇게 현재 내가 작업하고 있는 database가 어디냐에 따라서 database가 다른 table끼리 join해서 작업할 수 있습니다.
+
+### Self Joins
+
+같은 table끼리 join하여 새로운 table을 생성하는 것도 가능합니다.
+
+```mysql
+SELECT * 
+FROM employees e
+JOIN employees m
+ON e.reports_to = m.employee_id;
+```
+
+이렇게 작성하면 직원을 담당하고 있는 관리자의 정보까지 가져올 수 있습니다. (그 관리자도 employees table에 있는 경우.)
+
+```mysql
+SELECT e.employee_id, e.first_name, m.first_name AS manager
+FROM employees e
+JOIN employees m
+ON e.reports_to = m.employee_id;
+```
+
