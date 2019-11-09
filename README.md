@@ -484,3 +484,15 @@ JOIN products p
 ON oi.product_id = p.product_id;
 ```
 
+### Joining Across Databases
+
+개발자로 작업하다보면 table뿐만이 아니라 서로 다른 데이터 베이스를 동시에 활용해야하는 일이 생기기도 합니다. 이럴 때 쿼리를 어떻게 작성해야 하는지 알아봅시다.
+
+```mysql
+SELECT *
+FROM order_items oi
+JOIN sql_inventory.products p
+ON oi.product_id = p.product_id;
+```
+
+여기서 sql_inventory가 다른 database입니다. 이렇게 현재 내가 작업하고 있는 database가 어디냐에 따라서 database가 다른 table끼리 join해서 작업할 수 있습니다.
