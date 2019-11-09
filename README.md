@@ -439,3 +439,48 @@ ORDER BY points DESC
 LIMIT 3;
 ```
 
+## Retrieving Data From Multiple Tables
+
+### Inner Joins
+
+```mysql
+SELECT *
+FROM orders
+JOIN customers
+ON orders.customer_id = customers.customer_id;
+```
+
+위와 같이 쿼리를 작성하면 orders의 customer_id column 값과 customers의 customer_id column이 같은 부분을 연결해서 table를 만들어 줍니다.
+
+```mysql
+SELECT order_id, customer_id, first_name, last_name
+FROM orders
+JOIN customers
+ON orders.customer_id = customers.customer_id;
+```
+
+위와 같이 쿼리를 작성하면 에러가 발생합니다. 그 이유는 customer_id 때문입니다. 여기서 customer_id는 orders 테이블과 customers 테이블 모두에 존재하는 column입니다. 이런 경우 mysql은 두 table중 어느 테이블에서 customer_id 값을 가져올지 알 수 없습니다. 따라서 쿼리에 명시적으로 어느 테이블에서 가져올 것인지 작성해주어야 합니다.
+
+```mysql
+SELECT order_id, orders.customer_id, first_name, last_name
+FROM orders
+JOIN customers
+ON orders.customer_id = customers.customer_id;
+```
+
+그리고 여기서 작성한 쿼리를 보면 orders와 customers같은 table이 계속 반복되는 것을 확인하실 수 있습니다. 이런경우 아래와 같이 간단하게 줄여서 쿼리를 작성할 수 있습니다.
+
+```mysql
+SELECT order_id, o.customer_id, first_name, last_name
+FROM orders o
+JOIN customers c
+ON o.customer_id = c.customer_id;
+```
+
+```mysql
+SELECT order_id, oi.product_id, quantity, oi.unit_price
+FROM order_items oi
+JOIN products p
+ON oi.product_id = p.product_id;
+```
+
