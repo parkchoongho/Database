@@ -543,3 +543,15 @@ join payment_methods pm
 	on p.payment_method = pm.payment_method_id
 ```
 
+### Compound Join Conditions
+
+어떤 table에서는 그 어떤 column도 unique한 값을 가지지 않을 수 있습니다. 이런 경우에는 2개의 column을 조합하여 unique한 column을 만들어낼 수 있습니다. 이를 composite primary key라 부르는데 이는 2개 이상의 column을 조합하여 그 table에서의 unique한 primary key가 됨을 의미합니다. 이를 활용하여 join condition을 조합할 수 있습니다.
+
+```mysql
+select *
+from order_items oi
+join order_item_notes oin
+	on oi.order_id = oin.order_id
+    and oi.product_id = oin.product_id;
+```
+
