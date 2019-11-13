@@ -623,3 +623,39 @@ left join order_items oi
 order by p.product_id;
 ```
 
+### Outer Join Between Multiple Tables
+
+여러개의 table과 outer join을 맺을 수도 있습니다.
+
+```mysql
+select 
+	c.customer_id,
+    c.first_name,
+    o.order_id,
+    sh.name AS shipper
+from customers c
+left join orders o
+	on c.customer_id = o.customer_id
+left join shippers sh
+	on o.shipper_id = sh.shipper_id 
+order by c.customer_id;
+```
+
+이렇게 쿼리를 작성하면 주문하지 않은 모든 사람과 shipper가 없는 order까지 가져올 수 있습니다.(구글검색에서 더 자세히 공부할 것.)
+
+```mysql
+select
+	o.order_date,
+    o.order_id,
+    c.first_name AS customer,
+    sh.name AS shipper,
+    os.name AS status
+from orders o
+join customers c
+	on o.customer_id = c.customer_id
+left join shippers sh
+	on o.shipper_id = sh.shipper_id
+join order_statuses os
+	on o.status = os.order_status_id
+```
+
