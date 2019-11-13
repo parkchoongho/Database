@@ -659,3 +659,17 @@ join order_statuses os
 	on o.status = os.order_status_id
 ```
 
+### Self Outer Joins
+
+```mysql
+use sql_hr;
+
+select
+	e.employee_id,
+	e.first_name,
+    m.first_name AS manager
+from employees e
+left join employees m
+	on e.reports_to = m.employee_id;
+```
+
