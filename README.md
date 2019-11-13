@@ -573,3 +573,53 @@ where o.customer_id = c.customer_id;
 ```
 
 아래와 같은 쿼리 방법을 implicit한 join이라고 합니다. 그런데 아래와 같은 방법을 사용하면 where 절을 빼먹으면 에러가 발생하지 않고 모든 orders와 customers간에 join이 발생하고 table이 생성됩니다. 이는 실수했다는 것을 시스템상에서 알기 힘들기 때문에 explicit하게 join을 작성하여 쿼리를 쓰는 것을 습관화하는 것이 좋습니다.
+
+### Outer Joins
+
+지금까지 확인한 join은 모두 inner join입니다. 이번 파트에서는 outer join에 대해서 알아보는 시간을 갖겠습니다. (join이라고만 쿼리를 작성하면 이는 inner join을 의미합니다. outer join을 사용하고 싶으면 명시적으로 outer join이라고 쿼리를 작성해야 합니다.)
+
+```mysql
+select c.customer_id, c.first_name, o.order_id
+from customers c
+join orders o
+	on c.customer_id = o.customer_id
+order by c.customer_id;
+```
+
+이렇게 쿼리를 작성하면 손님중에 주문한 손님만 볼 수 있습니다. 만일 주문하지 않은 손님까지 데이터를 가지고 오고 싶다면 어떻게 하면 될까요? 아래와 같이 쿼리를 작성하면 됩니다.
+
+```mysql
+select 
+	c.customer_id, 
+    c.first_name, 
+    o.order_id
+from customers c
+left join orders o
+	on c.customer_id = o.customer_id
+order by c.customer_id;
+```
+
+outer join에는 **left join**과 **right join**이 있습니다. 위 경우에는 **left join**을 하면 모든 customer table의값을 가져오고 **right join**을 하면 모든 orders table의 값을 가져오게 됩니다.
+
+```mysql
+select 
+	c.customer_id, 
+    c.first_name, 
+    o.order_id
+from customers c
+right join orders o
+	on c.customer_id = o.customer_id
+order by c.customer_id;
+```
+
+```mysql
+select 
+	p.product_id,
+    p.name,
+    oi.quantity
+from products p
+left join order_items oi
+	on p.product_id = oi.product_id
+order by p.product_id;
+```
+
