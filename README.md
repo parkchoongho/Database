@@ -673,3 +673,69 @@ left join employees m
 	on e.reports_to = m.employee_id;
 ```
 
+### The USING Clause
+
+```mysql
+select 
+	o.order_id,
+    c.first_name
+from orders o
+join customers c
+	on o.customer_id = c.customer_id;
+```
+
+쿼리가 복잡해질 수록 on condition이 쿼리를 이해하는 것을 방해할 수 있습니다. 그런데 위 처럼 같은 column 값인 customer_id를 가리키고 있으면 **USING**을 사용하여 더 간단하게 표현할 수 있습니다.
+
+```mysql
+select 
+	o.order_id,
+    c.first_name
+from orders o
+join customers c
+	using (customer_id)
+```
+
+이 쿼리는 그 위의 쿼리와 같은 결과 값을 되돌려줍니다.
+
+```mysql
+select 
+	o.order_id,
+    c.first_name,
+    sh.name AS shipper
+from orders o
+join customers c
+    using (customer_id)
+left join shippers sh
+	using (shipper_id);
+```
+
+```mysql
+select *
+from order_items oi
+join order_item_notes oin
+	on oi.order_Id = oin.order_Id AND
+		oi.product_id = oin.product_id;
+```
+
+위 쿼리를 아래처럼 **USING**을 이용하여 간단하게 만들 수 있습니다.
+
+```mysql
+select *
+from order_items oi
+join order_item_notes oin
+	using (order_id, product_id);
+```
+
+```mysql
+select 
+	p.date,
+    c.name AS client,
+    p.amount,
+    pm.name AS payment_method
+from payments p
+join clients c
+	using (client_id)
+join payment_methods pm
+	on p.payment_method = pm.payment_method_id;
+```
+
