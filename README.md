@@ -739,3 +739,18 @@ join payment_methods pm
 	on p.payment_method = pm.payment_method_id;
 ```
 
+### Natural Joins
+
+MySQL에는 더 간단하게 두 테이블을 join하는 방법이 있습니다. 이는 **Natural Join**이라하고 쉽게 작성할 수 있지만 권장하는 방식은 아닙니다. 왜냐하면 종종 원치 않는 결과를 야기하기 때문입니다. 
+
+```mysql
+select
+	o.order_id,
+	c.first_name
+from orders o
+natural join customers c;
+```
+
+이렇게 쿼리를 작성하면 MySQL에서 자동으로 같은 이름을 가진 column을 join해서 결과로 보여줍니다.
+
+그런데 만약 column 값이 바뀌었거나 테이블에 변화가 생겼을 경우 예상치 않은 결과가 나타날 수 있으니 join condition을 명시하는 방법이 더 권장됩니다.
