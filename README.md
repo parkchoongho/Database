@@ -754,3 +754,48 @@ natural join customers c;
 이렇게 쿼리를 작성하면 MySQL에서 자동으로 같은 이름을 가진 column을 join해서 결과로 보여줍니다.
 
 그런데 만약 column 값이 바뀌었거나 테이블에 변화가 생겼을 경우 예상치 않은 결과가 나타날 수 있으니 join condition을 명시하는 방법이 더 권장됩니다.
+
+### Cross Joins
+
+**Cross Join**을 활용하면 첫 번째 테이블의 모든 record를 두 번째 테이블의 모든 record와 join할 수 있습니다.
+
+```mysql
+select *
+from customers c
+cross join products p;
+```
+
+모든 record를 join하는 것이기 때문에 condition이 필요하지 않습니다.
+
+```mysql
+select 
+	c.first_name AS customer,
+    p.name AS product
+from customers c
+cross join products p;
+```
+
+위 쿼리와 아래 쿼리는 같은 값을 가져옵니다. 위 쿼리처럼 작성하는 것을 권장합니다.
+
+```mysql
+select 
+	c.first_name AS customer,
+    p.name AS product
+from customers c, products p
+```
+
+```mysql
+select 
+	sh.name AS shipper,
+    p.name AS product
+from shippers sh, products p
+```
+
+```mysql
+select 
+	sh.name AS shipper,
+    p.name AS product
+from shippers sh
+cross join products p;
+```
+
