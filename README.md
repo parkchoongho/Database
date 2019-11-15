@@ -799,3 +799,95 @@ from shippers sh
 cross join products p;
 ```
 
+### Unions
+
+join을 활용하면 column을 결합해 여러가지 table 결과를 만들어낼 수 있습니다. 그런데 column뿐만이 아닌 row도 combine을 할 수 있습니다.
+
+```mysql
+select *
+from orders
+```
+
+이렇게 쿼리를 작성하면 order_date를 확인할 수 있습니다. 그런데 만약에 올해 주문에는 active라는 label을 붙히고 그 전 주문에 대해서는 archive라는 label을 붙히고 싶다면 어떻게 해야 할까요?
+
+```mysql
+select *
+from orders
+where order_date >= '2019-01-01'
+```
+
+하나는 이렇게 작성하는 것이 있습니다. 하지만 이는 좋은 방법이 아닙니다. 왜냐하면 2019년을 하드코딩해서 넣었기 때문에 만약에 년도가 바뀌면 다시 '2020-01-01'이라고 입력해야 되기 때문입니다.
+
+```mysql
+select 
+	order_id,
+    order_date,
+    'Active' As status
+from orders
+where order_date >= '2019-01-01';
+
+select 
+	order_id,
+    order_date,
+    'Archive' As status
+from orders
+where order_date < '2019-01-01';
+```
+
+이렇게 쿼리를 작성하면 쿼리문 마다 table이 다르게 생성됩니다. (table이 2개가 생성됨을 의미합니다.)
+
+```mysql
+select 
+	order_id,
+    order_date,
+    'Active' As status
+from orders
+where order_date >= '2019-01-01'
+UNION
+select 
+	order_id,
+    order_date,
+    'Archive' As status
+from orders
+where order_date < '2019-01-01';
+```
+
+이 쿼리는 서로 다른 2개의 table을 묶어서 나타내줍니다. **Union**을 활용할 때는 2개의 table의 column 수가 같아야합니다. 가령,
+
+```mysql
+select first_name, last_name
+from customers
+union
+select name
+from shippers;
+```
+
+이 쿼리는 에러를 발생시킵니다. 첫 번째 table 결과는 column이 2개 두 번째 table 결과는 column이 1개이기 때문입니다. 그리고 **Union**을 활용한 table 결과 column값은 첫 번째 쿼리의 column 값과 동일하게 나타납니다.
+
+```mysql
+select 
+	customer_id, 
+    first_name, 
+    points,
+    'Gold' AS status
+from customers 
+where points >= 3000
+union
+select 
+	customer_id, 
+    first_name, 
+    points,
+    'Silver' AS status
+from customers 
+where points between 2000 and 3000
+union
+select 
+	customer_id, 
+    first_name, 
+    points,
+    'Bronze' AS status
+from customers 
+where points <= 2000
+ORDER BY first_name;
+```
+
