@@ -81,3 +81,21 @@ values(
     )
 ```
 
+### Inserting Multiple Rows
+
+이번에는 여러개의 데이터를 입력하는 쿼리를 작성해 보겠습니다.
+
+```mysql
+insert into shippers (name)
+values('Jalhanika'),
+	  ('Mothanika'),
+	  ('PyeongBumhanika')
+```
+
+```mysql
+insert into products (name, quantity_in_stock, unit_price)
+values('banana milk', 30, 1.2),
+	  ('samgakgimbab', 60, 1.1),
+	  ('cupramyeon', 40, 1.3)
+```
+
