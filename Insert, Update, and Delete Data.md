@@ -16,3 +16,68 @@ char (50)과 varchar(50)의 차이점: 만일 길이 5의 문자열을 삽입했
 
 **AI(Auto Increment)**
 
+### Inserting a Row
+
+데이터를 입력하는 쿼리를 작성해보도록 하겠습니다.
+
+```mysql
+insert into customers
+values(
+	default,
+    'Choong Ho',
+    'Park',
+    '1992-11-26',
+    '010-6987-9383',
+    'Song pa',
+    'Seoul',
+    'Korea',
+    default
+    )
+```
+
+위 쿼리와 아래 쿼리는 동일한 결과를 가져옵니다.
+
+```mysql
+insert into customers(
+	first_name,
+    last_name,
+    birth_date,
+    phone,
+    address,
+    city,
+    state
+)
+values(
+    'Choong Ho',
+    'Park',
+    '1992-11-26',
+    '010-6987-9383',
+    'Song pa',
+    'Seoul',
+    'Korea'
+    )
+```
+
+column을 넣을 때는 꼭 table에 명시되어 있는 column 순서대로 넣을 필요는 없습니다.
+
+```mysql
+insert into customers(
+    last_name,
+	first_name,
+    birth_date,
+    phone,
+    address,
+    city,
+    state
+)
+values(
+    'Park',
+    'Choong Ho',
+    '1992-11-26',
+    '010-6987-9383',
+    'Song pa',
+    'Seoul',
+    'Korea'
+    )
+```
+
