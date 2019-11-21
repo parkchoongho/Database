@@ -116,3 +116,50 @@ values
 orders table 1개의 row가 orders_items table 여러개의 row를 가질 수 있을 때, table1을 parent라 하고 table2를 child라 합니다. 하나의 orders row에 해당하는 order_items를 2개 rows를 해당 table에 넣었습니다.
 
 **LAST_INSERT_ID()**는 마지막에 넣은 데이터의 ID 값을 가지고 오는 MySQL 내장함수입니다.
+
+### Creating a Copy of a Table
+
+만약 우리가 orders table을 복사한 orders_archive table을 만들고 싶다고 가정해 봅시다.
+
+```mysql
+create table orders_archived as
+select * from orders;
+```
+
+이렇게 쿼리를 작성하면 orders table의 복사본을 생성할 수 있습니다. 그런데 column의 세부사항을 보면 primary key나 auto increment와 같은 사항이 설정되어 있지 않습니다. 이 문제는 어떻게 해결해야 할까요?(이 tutorial에서는 해결하지 않습니다.)
+
+우선 truncate를 활용하여 데이터를 모두 날리고 새로 설정해보겠습니다.
+
+```mysql
+select * 
+from orders
+where order_date < '2019-01-01';
+```
+
+위 쿼리로 받은 데이터를 orders_archived table로 넣는 쿼리를 작성하도록 하겠습니다.
+
+```mysql
+insert into orders_archived
+select * 
+from orders
+where order_date < '2019-01-01';
+```
+
+```mysql
+create table invoices_archived as
+select i.invoice_id, number, c.name as client, i.invoice_total, i.payment_total, i.invoice_date, i.due_date, i.payment_date
+from invoices i
+join clients c
+	on i.client_id = c.client_id
+where i.payment_date is not null;
+```
+
+```mysql
+create table invoices_archived as
+select i.invoice_id, number, c.name as client, i.invoice_total, i.payment_total, i.invoice_date, i.due_date, i.payment_date
+from invoices i
+join clients c
+	using (client_id)
+where i.payment_date is not null;
+```
+
