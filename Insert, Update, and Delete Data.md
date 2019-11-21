@@ -217,3 +217,38 @@ set
 where birth_date > '1990-12-31';
 ```
 
+### Updating Subqueries in Updates
+
+```mysql
+update invoices
+set 
+	payment_total = invoice_total * 0.5,
+    payment_date = due_date
+where client_id = 
+		(select client_id
+		from clients
+		where name = 'Myworks');
+```
+
+```mysql
+update invoices
+set 
+	payment_total = invoice_total * 0.5,
+    payment_date = due_date
+where client_id in 
+		(select client_id
+		from clients
+		where state in ('CA', 'NY');
+```
+
+()안에 들어가있는 쿼리를 먼저 실행합니다.
+
+```mysql
+update orders
+	set comments = 'gold customer'
+where customer_id in 
+	(select customer_id 
+	from customers
+	where points > 3000);
+```
+
