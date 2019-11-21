@@ -252,3 +252,20 @@ where customer_id in
 	where points > 3000);
 ```
 
+### Deleting Rows
+
+table에서 데이터를 삭제하는 방법을 배워보곘습니다.
+
+```mysql
+delete from invoices
+where invoices_id = 1;
+```
+
+```mysql
+delete from invoices
+where client_id = 
+		(select client_id
+		from clients
+		where name = 'Myworks');
+```
+
