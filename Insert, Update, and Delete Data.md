@@ -163,3 +163,33 @@ join clients c
 where i.payment_date is not null;
 ```
 
+### Updating a Single Row
+
+table에 있는 data가 변경되었을 때 이를 어떻게 해야 반영할 수 있을까요?
+
+```mysql
+update invoices
+set payment_total = 10, payment_date = '2019-11-20'
+where invoice_id = 1;
+```
+
+```mysql
+update invoices
+set payment_total = 0, payment_date = null
+where invoice_id = 1;
+```
+
+```mysql
+update invoices
+set payment_total = default, payment_date = default
+where invoice_id = 1;
+```
+
+```mysql
+update invoices
+set 
+	payment_total = invoice_total * 0.5,
+	payment_date = due_date
+where invoice_id = 3;
+```
+
