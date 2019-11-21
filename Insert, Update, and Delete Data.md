@@ -99,3 +99,20 @@ values('banana milk', 30, 1.2),
 	  ('cupramyeon', 40, 1.3)
 ```
 
+### Inserting Hierarchical Rows
+
+만약 여러개의 table에 데이터를 넣고 싶다면 어떻게 하면 될까요? 
+
+```mysql
+insert into orders (customer_id, order_date, status)
+values (1, '2019-11-20', 1);
+
+insert into order_items
+values 
+	(LAST_INSERT_ID(), 1, 1, 2.95),
+	(LAST_INSERT_ID(), 2, 3, 3.95);
+```
+
+orders table 1개의 row가 orders_items table 여러개의 row를 가질 수 있을 때, table1을 parent라 하고 table2를 child라 합니다. 하나의 orders row에 해당하는 order_items를 2개 rows를 해당 table에 넣었습니다.
+
+**LAST_INSERT_ID()**는 마지막에 넣은 데이터의 ID 값을 가지고 오는 MySQL 내장함수입니다.
