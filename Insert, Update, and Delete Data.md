@@ -193,3 +193,27 @@ set
 where invoice_id = 3;
 ```
 
+### Updating Multiple Rows
+
+여러개의 rows를 변경하고 싶다면 이렇게 하면 됩니다.
+
+```mysql
+update invoices
+set 
+	payment_total = invoice_total * 0.5,
+	payment_date = due_date
+where client_id = 3;
+```
+
+where clause의 condition 부분을 여러개가 선택될 수 있게끔 수정하면 됩니다.
+
+```mysql
+-- Write a SQL statement to
+-- 		give any customers born after 1990
+-- 		50 extra points
+update customers
+set 
+	points = points + 50
+where birth_date > '1990-12-31';
+```
+
