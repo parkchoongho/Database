@@ -66,3 +66,57 @@ select
 from invoices;
 ```
 
+### The GROUP BY Clause
+
+```mysql
+select
+	sum(invoice_total) as total_sales
+from invoices
+```
+
+이와 같이 쿼리를 작성하면 총합이 나오게 됩니다. 근데 만약 client마다의 total_sales를 확인하고 싶다면 어떻게 해야 할까요?
+
+```mysql
+select
+	client_id,
+	sum(invoice_total) as total_sales
+from invoices
+group by client_id;
+```
+
+```mysql
+select
+	client_id,
+	sum(invoice_total) as total_sales
+from invoices
+where invoice_date > '2019-06-30'
+group by client_id
+order by total_sales desc;
+```
+
+clause가 입력되는 순서를 기억하시기 바랍니다.
+
+이번에는 여러개의 column을 동시에 group by하는 쿼리를 작성하겠습니다.
+
+```mysql
+select
+	c.state,
+	c.city,
+	sum(i.invoice_total) as total_sales
+from invoices i
+join clients c using(client_id)
+group by state, city;
+```
+
+```mysql
+select
+	p.date as payment_date,
+    pm.name as pay_method,
+    sum(p.amount) as total_payments
+from payments p
+join payment_methods pm
+	on p.payment_method = pm.payment_method_id
+group by date, pay_method
+order by date;
+```
+
