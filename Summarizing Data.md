@@ -172,3 +172,41 @@ group by c.customer_id
 having total > 100
 ```
 
+### THe ROLLUP Operator
+
+```mysql
+select
+	client_id,
+    sum(invoice_total) as total_sales
+from invoices
+group by client_id with rollup
+```
+
+이렇게 쿼리를 작성하면 group 화된 total_sales 전체합을 나타내는 row가 table 맨 밑에 추가되어서 나타납니다. 
+
+```mysql
+select
+	c.state,
+    c.city,
+    sum(i.invoice_total) as total_sales
+from invoices i
+join clients c using(client_id)
+group by state, city with rollup
+```
+
+이 경우에는 state별로 계산된 전체 값도 중간중간 추가되어 table에 나타납니다.
+
+ROLLUP Operator은 standard한 SQL은 아닙니다. MySQL에서만 가능하다는 점을 참고하시기 바랍니다.
+
+```mysql
+select 
+	pm.name as payment_method,
+	sum(p.amount) as total
+from payments p
+join payment_methods pm 
+	on (p.payment_method=pm.payment_method_id)
+group by pm.name with rollup
+```
+
+ROLLUP은 alias한 column에 동작하지 않습니다.
+
