@@ -120,3 +120,55 @@ group by date, pay_method
 order by date;
 ```
 
+### The HAVING Clause
+
+```mysql
+select
+	client_id,
+    SUM(invoice_total) as total_sales
+from invoices
+group by client_id;
+```
+
+이 쿼리를 날리면 client_id로 합한 total_sales가 나오게 됩니다. 500달러 이상 client만 보고 싶다면 어떻게 해야 할까요? 일반적으로는 where을 사용하겠지만 total_sales group화 된 이후에 나오는 column이기 때문에 where clause를 사용할 수 없습니다. having clause를 사용하면 데이터를 group화 한 후에 원하는 데이터만 뽑아올 수 있습니다. 
+
+```mysql
+select
+	client_id,
+    SUM(invoice_total) as total_sales
+from invoices
+group by client_id
+having total_sales > 500;
+```
+
+WHERE - group화 하기전 row들 중 원하는 부분을 가져올 수 있습니다.
+
+HAVING - group화 한 후, row들 중 원하는 부분을 가져올 수 있습니다. + HAVING Clause에서는 SELECT 문에 언급되어 있는 column만 참조할 수 있습니다.
+
+```mysql
+select
+	client_id,
+    SUM(invoice_total) as total_sales,
+    count(*) as number_of_invoices
+from invoices
+group by client_id
+having total_sales > 500 and number_of_invoices > 5;
+```
+
+```mysql
+-- Get the customers
+-- 		located in Virginia
+-- 		who have spent more than $100
+select 
+	c.customer_id,
+    c.first_name,
+    c.last_name,
+	sum(oi.quantity*oi.unit_price) as total
+from customers c
+join orders o using(customer_id)
+join order_items oi using(order_id)
+where c.state = 'VA'
+group by c.customer_id
+having total > 100
+```
+
