@@ -56,3 +56,52 @@ where client_id not in (
 )
 ```
 
+### Subqueries vs Joins
+
+subquey는 join과 상호보완적인 관계랑 사용될 수 있습니다.
+
+```mysql
+-- Find clients without invoices
+
+select *
+from clients
+where client_id not in (
+	select distinct client_id
+    from invoices
+)
+
+select *
+from clients
+left join invoices using(client_id)
+where invoice_id is null
+```
+
+크게 두가지에 근거해서 둘 중 하나를 선택할 수 있습니다. (**Performance, Readability**)
+
+위 두 쿼리는 작동 시간이 비슷하기에 더 읽기 쉬운 쿼리를 사용하는 것이 좋습니다.
+
+여기서는 위 쿼리가 더 직관적으로 가져오려는 데이터를 표현하고 있기에 위 쿼리가 더 좋은 것으로 판단됩니다.
+
+```mysql
+-- Find customers who have ordered lettuce (id = 3)
+-- 		Select customer_id, first_name, last_name
+select customer_id, first_name, last_name
+from customers
+where customer_id in (
+	select o.customer_id
+    from order_items oi
+    join orders o using (order_id)
+    where product_id = 3
+)
+```
+
+```mysql
+-- Find customers who have ordered lettuce (id = 3)
+-- 		Select customer_id, first_name, last_name
+select distinct customer_id, first_name, last_name
+from customers c
+join orders o using (customer_id)
+join order_items oi using (order_id)
+where product_id = 3
+```
+
