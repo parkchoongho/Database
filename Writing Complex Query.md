@@ -28,3 +28,31 @@ where salary > (
 )
 ```
 
+### The IN Operator
+
+이번에는 단 한번도 주문되지 않은 제품에 대한 데이터를 가져오고 싶다고 가정해 봅시다.
+
+```mysql
+-- Find the products that have never been ordered
+
+select *
+from products
+where product_id not in (
+	select distinct product_id
+	from order_items
+)
+```
+
+이 subquery는 여러개의 값을 반환합니다.
+
+```mysql
+-- Find clients without invoices
+
+select *
+from clients 
+where client_id not in (
+	select distinct client_id
+    from invoices
+)
+```
+
