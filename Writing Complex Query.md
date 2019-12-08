@@ -183,7 +183,7 @@ where salary > (
 )
 ```
 
-이처럼 subquery가 outer query를 참조하고 있으면 이를 **Correleater Subqueries**라 합니다.
+이처럼 subquery가 outer query를 참조하고 있으면 이를 **Correlated Subqueries**라 합니다.
 
 ```mysql
 -- Get invoices that are larger than the
