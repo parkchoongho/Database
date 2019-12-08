@@ -105,3 +105,34 @@ join order_items oi using (order_id)
 where product_id = 3
 ```
 
+### The ALL Keyword
+
+```mysql
+-- Select invoices lareger than all invoices of
+-- client 3
+
+select *
+from invoices
+where invoice_total > (
+	select MAX(invoice_total)
+	from invoices
+	where client_id = 3
+)
+```
+
+위 쿼리를 **ALL** 키워드를 사용하여 더 쉽게 표현할 수 있습니다. 
+
+```mysql
+-- Select invoices lareger than all invoices of
+-- client 3
+
+select *
+from invoices
+where invoice_total > ALL (
+	select *
+	from invoices
+	where client_id = 3
+)
+```
+
+이렇게 쿼리를 작성하면 이제 subquery에서 여러개의 값을 받아온 후 **ALL** 키워드로 invoice_total과 비교할 수 있게 됩니다. 모든 값보다 큰 것이므로 그중에 가장 큰 값보다 큰 값들을 도출하므로 위에 있는 쿼리와 동등한 결과가 나타납니다.
