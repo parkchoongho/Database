@@ -136,3 +136,34 @@ where invoice_total > ALL (
 ```
 
 이렇게 쿼리를 작성하면 이제 subquery에서 여러개의 값을 받아온 후 **ALL** 키워드로 invoice_total과 비교할 수 있게 됩니다. 모든 값보다 큰 것이므로 그중에 가장 큰 값보다 큰 값들을 도출하므로 위에 있는 쿼리와 동등한 결과가 나타납니다.
+
+### ANY Keyword
+
+```mysql
+-- select clients with at least two invoices
+select *
+from clients
+where client_id in (
+	select client_id
+    from invoices
+    group by client_id
+    having count(*) >=2
+)
+```
+
+이 쿼리를 **ANY** Keyword를 사용하여 다르게 표현할 수 있습니다.
+
+```mysql
+-- select clients with at least two invoices
+select *
+from clients
+where client_id = ANY (
+	select client_id
+    from invoices
+    group by client_id
+    having count(*) >=2
+)
+```
+
+subquery에서 나온 값들 중 아무 값이라도 client_id와 같으면 그 결과를 출력합니다.
+
