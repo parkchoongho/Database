@@ -167,3 +167,36 @@ where client_id = ANY (
 
 subquery에서 나온 값들 중 아무 값이라도 client_id와 같으면 그 결과를 출력합니다.
 
+### Correlated Subqueries
+
+```mysql
+-- select employees whose salary is
+-- above the average in their office
+use sql_hr;
+
+select *
+from employees e
+where salary > (
+	select avg(salary)
+    from employees
+    where office_id = e.office_id
+)
+```
+
+이처럼 subquery가 outer query를 참조하고 있으면 이를 **Correleater Subqueries**라 합니다.
+
+```mysql
+-- Get invoices that are larger than the
+-- client's average invoice amount
+
+use sql_invoicing;
+
+select *
+from invoices i
+where invoice_total > (
+	select avg(invoice_total)
+    from invoices
+    where client_id = i.client_id
+) 
+```
+
