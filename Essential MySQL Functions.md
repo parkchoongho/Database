@@ -84,3 +84,33 @@ from orders
 where year(order_date) = year(now());
 ```
 
+### Formatting Dates and Times
+
+```mysql
+select date_format(now(), '%y');
+select date_format(now(), '%Y');
+select date_format(now(), '%m %Y');
+select date_format(now(), '%M %Y');
+select date_format(now(), '%M %d %Y');
+
+select time_format(now(), '%h:%i %p');
+```
+
+[MySQL Date Formatter](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html)
+
+### Calculating Dates and Times
+
+```mysql
+select date_add(now(), interval 1 day);
+select date_add(now(), interval 1 year);
+
+select date_add(now(), interval -1 year);
+select date_sub(now(), interval 1 year);
+
+select datediff(now(), '2019-01-02');
+select datediff(now(), '2019-01-02 09:00');
+
+select time_to_sec('09:00');
+select time_to_sec('09:02') - time_to_sec('09:00')
+```
+
