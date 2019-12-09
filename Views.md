@@ -143,3 +143,14 @@ where invoice_id = 3;
 ```
 
 이렇게 해당 값을 변경하려고 하면 check option으로 인해 error가 발생해서 해당 값이 view에서 제외되는 것을 방지할 수 있습니다.
+
+### Other Benefits of Views
+
+View는 쿼리를 간단하게 해주는 장점 외에도 여러가지 장점을 가지고 있습니다.
+
+- #### Simplify Queries
+
+- #### Reduce The Impact of Changes
+
+- #### Restrict Access to The Data
+
