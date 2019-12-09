@@ -185,3 +185,35 @@ select
 from products p;
 ```
 
+### THe CASE Operator
+
+만일 처리해야할 expression이 여러개라면 어떻게 쿼리를 작성해야 할까요?
+
+```mysql
+select
+	order_id,
+    order_date,
+    case
+		when year(order_date) = year(now()) then 'Active'
+        when year(order_date) = year(now()) - 1 then 'Last Year'
+        when year(order_date) < year(now()) - 1 then 'Archived'
+        else 'future'
+	end as category
+from orders;
+```
+
+이렇게 작성하면 여러개의 **CASE**에 대비하여 쿼리를 작성할 수 있습니다.
+
+```mysql
+select
+	concat(first_name, ' ', last_name) as customer,
+    points,
+    case
+		when points >= 3000 then 'Gold'
+        when points >= 2000 then 'Silver'
+        else 'Bronze'
+	end as category
+from customers
+order by points desc;
+```
+
