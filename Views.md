@@ -73,3 +73,42 @@ order by total_sales desc;
 
 replace를 추가하여 view를 바꿀 수 있습니다.
 
+### Updatable Views
+
+작성한 view를 가지고 **특정 상황**에서는 insert, update, delete등의 작업을 할 수 있습니다.
+
+특정 상황이란 아래의 명령어가 쿼리에 없는 경우입니다.
+
+- **DISTINCT**
+- **Aggregate Functions(MIN, MAX, SUM, .....)**
+- **GROUP BY / HAVING**
+- **UNION**
+
+이 명령어가 없는 경우의 View를 Updatable View라고 합니다.
+
+```mysql
+create or replace view invoice_with_balance as 
+select 
+	*, (invoice_total - payment_total) as balance
+from invoices
+where (invoice_total- payment_total) > 0
+```
+
+해당 쿼리는 위의 조건을 충족하므로 Updatable View입니다. 위 View를 변경해보겠습니다.
+
+```mysql
+delete from invoice_with_balance
+where invoice_id = 1
+```
+
+이 쿼리를 날리고 invoices table을 확인해보면 invoice_id가 1인 row가 사라진 것을 확인할 수 있습니다. 
+
+```mysql
+update invoice_with_balance
+set due_date = date_add(due_date, interval 2 day)
+where invoice_id = 2;
+```
+
+ 이 쿼리를 날리고 invoices table을 확인해보면 invoice_id가 2인 row의 due_date column 값이 2일 추가된 것을 확인할 수 있습니다. 
+
+insert의 경우에는 해당 view가 기초하고 있는 table의 모든 column값을 가지고 있을 때만 가능합니다.
