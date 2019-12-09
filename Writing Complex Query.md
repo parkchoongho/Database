@@ -242,3 +242,30 @@ where not exists (
 )
 ```
 
+### Subqueries in the SELECT Clause
+
+```mysql
+select
+	invoice_id,
+    invoice_total,
+    (select avg(invoice_total)
+		from invoices) as invoice_average,
+	invoice_total - (select invoice_average) as difference
+from invoices
+```
+
+select에서는 alias를 바로 사용할 수 없습니다. 대신에 select문을 활용하여 값을 가져와 위 쿼리와 같이 활용할 수 있습니다.
+
+```mysql
+select 
+	name,
+    client_id,
+	(select sum(invoice_total) 
+	   from invoices
+       where c.client_id = client_id) as total_sales,
+	(select avg(invoice_total)
+		from invoices) as average,
+	(select total_sales - average) as difference
+from clients c;
+```
+
