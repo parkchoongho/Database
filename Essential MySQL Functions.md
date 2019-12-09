@@ -132,7 +132,7 @@ from orders
 order by order_id;
 ```
 
-**IFNULL**은 해당 column 값이 null일 경우 2번째 parameter 값을 출력해서 보여줍니다. **coalesce**는 shipper_id가 null인 경우 comments를 보여주고 comments까지 null인경우에 'Not Assigned'를 출력합니다.
+**IFNULL**은 해당 column 값이 null일 경우 2번째 parameter 값을 출력해서 보여줍니다. **COALESCE**는 shipper_id가 null인 경우 comments를 보여주고 comments까지 null인경우에 'Not Assigned'를 출력합니다.
 
 ```mysql
 select 
@@ -146,5 +146,42 @@ select
 	concat(first_name, ' ', last_name) as customer,
     coalesce(phone, 'Unknown') as phone
 from customers;
+```
+
+### The IF Function
+
+```mysql
+select
+	order_id,
+    order_date,
+    if(
+		year(order_date) = year(now()), 
+        'Active', 
+        'Archive') as category
+from orders;
+```
+
+**IF** function에서 첫번째는 expression이고 두번째는 true일 때 결과 값, 세번째는 false일 때 결과 값입니다.
+
+```mysql
+select
+	product_id,
+    name,
+    count(*) as orders,
+    if(count(*) > 1, 'Many Times', 'Once') as frequency
+from products p
+join order_items oi using (product_id)
+group by p.product_id;
+```
+
+```mysql
+select
+	product_id,
+    name,
+    (select count(*)
+		from order_items oi
+        where p.product_id = product_id) as orders,
+	if((select orders) > 1, 'Many Times', if((select orders) = 1, 'Once', 'Not Yet')) as frequency
+from products p;
 ```
 
