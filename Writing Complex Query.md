@@ -200,3 +200,45 @@ where invoice_total > (
 ) 
 ```
 
+### The EXISTS Operator
+
+```mysql
+-- Select clients that have an invoice
+
+select *
+from clients
+where client_id in (
+	select distinct client_id
+    from invoices
+)
+```
+
+위 쿼리를 **EXISTS** Operator를 활용하여 다르게 작성해 보겠습니다.
+
+```mysql
+-- Select clients that have an invoice
+
+select *
+from clients c
+where exists (
+	select client_id
+    from invoices i
+    where c.client_id = i.client_id 
+)
+```
+
+첫 번째 쿼리는 subquery를 실행한 후 결과가 나온후에 outer query를 실행합니다. 그런데 만약 subquery의 결과가 100만개만큼 결과 수가 많다면, 쿼리의 퍼포먼스가 떨어지게 될 것입니다. 그런 경우에 **EXISTS** Operator를 활용합니다. 
+
+```mysql
+-- Find the products that have never been ordered
+use sql_store;
+
+select *
+from products p
+where not exists (
+	select product_id
+    from order_items oi
+    where oi.product_id = p.product_id
+)
+```
+
