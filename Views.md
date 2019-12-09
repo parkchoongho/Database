@@ -112,3 +112,34 @@ where invoice_id = 2;
  이 쿼리를 날리고 invoices table을 확인해보면 invoice_id가 2인 row의 due_date column 값이 2일 추가된 것을 확인할 수 있습니다. 
 
 insert의 경우에는 해당 view가 기초하고 있는 table의 모든 column값을 가지고 있을 때만 가능합니다.
+
+### The WITH CHECK OPTION Clause
+
+**WITH CHECK OPTION**을 활용하면 해당 View에서 update나 delete 쿼리문이 동작하는 것을 제한합니다.
+
+```mysql
+update invoice_with_balance
+set payment_total = invoice_total
+where invoice_id = 2;
+```
+
+이렇게 쿼리문을 작성하면 해당 View에서 invoice_id가 2인 row가 더 이상 포함되지 않는 것을 확인할 수 있습니다.
+
+```mysql
+create or replace view invoice_with_balance as 
+select 
+	*, (invoice_total - payment_total) as balance
+from invoices
+where (invoice_total- payment_total) > 0
+with check option
+```
+
+이렇게 View를 변경하고 View를 다시 변경하도록 하겠습니다.
+
+```mysql
+update invoice_with_balance
+set payment_total = invoice_total
+where invoice_id = 3;
+```
+
+이렇게 해당 값을 변경하려고 하면 check option으로 인해 error가 발생해서 해당 값이 view에서 제외되는 것을 방지할 수 있습니다.
