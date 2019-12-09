@@ -57,3 +57,30 @@ from customers;
 
 [MySQL String Functions 참고](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html)
 
+### Date Functions in MySQL
+
+```mysql
+select now(), curdate(), curtime();
+
+select year(now());
+select month(now());
+select day(now());
+select hour(now());
+select minute(now());
+select second(now());
+-- 위 함수들은 integer를 return합니다. 결과 값으로 string을 받고 싶은 경우
+
+select dayname(now());
+select monthname(now())
+
+select extract(year from now());
+select extract(month from now());
+select extract(day from now());
+```
+
+```mysql
+select *
+from orders
+where year(order_date) = year(now());
+```
+
