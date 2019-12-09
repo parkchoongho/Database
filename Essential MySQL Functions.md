@@ -114,3 +114,37 @@ select time_to_sec('09:00');
 select time_to_sec('09:02') - time_to_sec('09:00')
 ```
 
+### The IFNULL and COALESCE Functions
+
+```mysql
+select
+	order_id,
+    ifnull(shipper_id, 'Not Assigned') as shipper
+from orders
+order by order_id;
+```
+
+```mysql
+select
+	order_id,
+    coalesce(shipper_id, comments, 'Not Assigned') as shipper
+from orders
+order by order_id;
+```
+
+**IFNULL**은 해당 column 값이 null일 경우 2번째 parameter 값을 출력해서 보여줍니다. **coalesce**는 shipper_id가 null인 경우 comments를 보여주고 comments까지 null인경우에 'Not Assigned'를 출력합니다.
+
+```mysql
+select 
+	concat(first_name, ' ', last_name) as customer,
+    ifnull(phone, 'Unknown') as phone
+from customers;
+```
+
+```mysql
+select 
+	concat(first_name, ' ', last_name) as customer,
+    coalesce(phone, 'Unknown') as phone
+from customers;
+```
+
