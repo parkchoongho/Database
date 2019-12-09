@@ -269,3 +269,42 @@ select
 from clients c;
 ```
 
+### Subqueries in the FROM Clause
+
+쿼리를 실행해서 생성한 테이블을 from clause에서 활용할 수 있습니다. 실제 database에 존재하는 table은 아니지만 from clause로 참조할 수 있습니다.
+
+```mysql
+select *
+from (
+	select 
+		name,
+		client_id,
+		(select sum(invoice_total) 
+		   from invoices
+		   where c.client_id = client_id) as total_sales,
+		(select avg(invoice_total)
+			from invoices) as average,
+		(select total_sales - average) as difference
+	from clients c
+) as sales_summary;
+```
+
+위처럼 from에서 subquery를 사용할 경우 alias(sales_summary)를 주어야 합니다.
+
+```mysql
+select *
+from (
+	select 
+		name,
+		client_id,
+		(select sum(invoice_total) 
+		   from invoices
+		   where c.client_id = client_id) as total_sales,
+		(select avg(invoice_total)
+			from invoices) as average,
+		(select total_sales - average) as difference
+	from clients c
+) as sales_summary
+where total_sales is not null
+```
+
