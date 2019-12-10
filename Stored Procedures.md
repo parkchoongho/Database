@@ -50,3 +50,17 @@ end$$
 delimiter ;
 ```
 
+### Dropping Stored Procedures
+
+저장되어있는 procedure을 삭제해 보겠습니다.
+
+```mysql
+drop procedure get_clients
+```
+
+get_clients라는 이름의 procedure가 있다면 삭제가 진행됩니다. 하지만 get_clients가 존재하지 않으면 에러가 발생합니다. 이런 에러를 방지하려면 어떻게 해야 할까요? **IF EXISTS**를 활용합니다.
+
+```mysql
+drop procedure if exists get_clients
+```
+
