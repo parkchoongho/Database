@@ -69,17 +69,17 @@ drop procedure if exists get_clients
 **Parameter**를 **Stored Procedure**에 전달하여 사용할 수도 있습니다.
 
 ```mysql
-    delimiter $$
-    create procedure get_clients_by_state
-    (
-        state char(2)
-    )
-    begin
-        select * from clients c
-        where c.state = state;
-    end$$
+delimiter $$
+create procedure get_clients_by_state
+(
+	state char(2)
+)
+begin
+	select * from clients c
+	where c.state = state;
+end$$
 
-    delimiter ;
+delimiter ;
 ```
 
 column state와 parameter state를 구분하기 위해 clients table을 c로 alias하고 `c.state = state` 로 where절을 구성했습니다.
@@ -116,5 +116,72 @@ delimiter ;
 
 ```mysql
 call get_invoices_by_client(1)
+```
+
+### Parameters with Default Value
+
+Parameter에 default 값을 설정하여 아무값도 입력하지 않아도 default value를 통해 procedure가 동작하도록 설정할 수 있습니다.
+
+```mysql
+delimiter $$
+create procedure get_clients_by_state
+(
+	state char(2)
+)
+begin
+	if state is null then
+		select * from clients;
+	else
+		select * from clients c
+		where c.state = state;
+	end if;
+end$$
+
+delimiter ;
+```
+
+**IF** statement를 사용할 때는 반드시 **END IF** statement로 닫아주어야합니다. 그래야 MySQL이 어디까지가 **IF** statement에 해당하는지 알 수 있기 때문입니다. 
+
+위 쿼리를 아래와 같이 바꿔서 procedure를 생성할 수도 있습니다.
+
+```mysql
+delimiter $$
+create procedure get_clients_by_state
+(
+	state char(2)
+)
+begin	
+	select * from clients c
+	where c.state = ifnull(state, c.state);
+end$$
+
+delimiter ;
+```
+
+아래 방법이 더 Professional한 방법입니다. (코드 수가 확 줄어듭니다.)
+
+```mysql
+-- Write a stored procedure called get_payments
+-- with two parameters
+-- 
+-- client_id => INT (4)
+-- payment_method_id => TINTINT (1) 0 - 255
+
+delimiter $$
+create procedure get_payments
+(
+		client_id INT, 
+        payment_method_id TINYINT
+)
+begin
+	select * from payments p
+    where 
+		p.client_id = ifnull(client_id, p.client_id) and
+		p.payment_method = ifnull(payment_method_id, p.payment_method);
+end$$
+```
+
+```mysql
+call get_payments(null, null);
 ```
 
