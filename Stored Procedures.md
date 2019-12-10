@@ -64,3 +64,57 @@ get_clients라는 이름의 procedure가 있다면 삭제가 진행됩니다. �
 drop procedure if exists get_clients
 ```
 
+### Parameters
+
+**Parameter**를 **Stored Procedure**에 전달하여 사용할 수도 있습니다.
+
+```mysql
+    delimiter $$
+    create procedure get_clients_by_state
+    (
+        state char(2)
+    )
+    begin
+        select * from clients c
+        where c.state = state;
+    end$$
+
+    delimiter ;
+```
+
+column state와 parameter state를 구분하기 위해 clients table을 c로 alias하고 `c.state = state` 로 where절을 구성했습니다.
+
+```mysql
+call get_clients_by_state('CA')
+```
+
+state가 'CA'인 client data를 불러옵니다.
+
+```mysql
+call get_clients_by_state()
+```
+
+이렇게 parameter를 전달하지 않으면 에러가 발생합니다.
+
+```mysql
+-- Write a stored procedure to return invoices
+-- for a given client
+-- 
+-- get_invoices_by_client
+delimiter $$
+create procedure get_invoices_by_client
+(
+	client_id int
+)
+begin
+	select * from invoices i
+    where i.client_id= client_id;
+end$$
+
+delimiter ;
+```
+
+```mysql
+call get_invoices_by_client(1)
+```
+
