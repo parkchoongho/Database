@@ -246,3 +246,7 @@ https://www.ibm.com/support/knowledgecenter/ko/ssw_ibm_i_73/rzala/rzalaccl.htm
 
 해당 에러가 어떤 에러인지 메세지를 남기는 습관은 DB 설정할 때 권장되는 습관입니다.
 
+### Output Parameters
+
+Output Parameters는 크게 권장되는 부분이 아니므로 나중에 필요할 때 다시 공부하기로 합니다.
+
