@@ -185,3 +185,64 @@ end$$
 call get_payments(null, null);
 ```
 
+### Parameter Validation
+
+이번에는 data를 변경하는 procedure를 생성해 보겠습니다. Data를 변경할 때 입력하는 Data가 올바른 데이터인지 판별하는 절차를 거쳐야합니다. Schema에 맞지 않은 데이터로 변경되지 않도록 검증을 하는 절차를 공부해봅시다. 
+
+```mysql
+delimiter $$
+create procedure get_payment
+(
+		invoice_id INT,
+    	payment_amount DECIMAL(9, 2),
+    	payment_date DATE
+)
+begin
+	UPDATE invoices i
+	SET
+		i.payment_total = payment_amount,
+        i.payment_date = payment_date
+	WHERE i.invoice_id = invoice_id;
+end$$
+```
+
+```mysql
+call make_payment(2, 100, '2019-01-01');
+```
+
+이렇게 쿼리를 진행한 후, invoice table을 확인해보면 invoice_id = 2인 row의 payment_total, payment_date column의 값들이 바뀌어 있는 것을 확인할 수 있습니다.
+
+```mysql
+call make_payment(2, -100, '2019-01-01');
+```
+
+근데 만약 이렇게 payment_total column 값에 -100이라는 유효하지 않는 데이터를 넣으면 어떻게 될까요? DB상 거르지 못하고 invoice table의 값을 변경시켜 버리고 맙니다. 이런 경우 argument에 대한 유효검사를 procedure에서 수행해야 합니다.
+
+```mysql
+delimiter $$
+create procedure get_payment
+(
+		invoice_id INT,
+    	payment_amount DECIMAL(9, 2),
+    	payment_date DATE
+)
+begin
+	if payment_amount <= 0 then
+		signal sqlstate '22003'
+			set message_text = 'Invalid payment amount';
+	end if;
+    
+	UPDATE invoices i
+	SET
+		i.payment_total = payment_amount,
+        i.payment_date = payment_date
+	WHERE i.invoice_id = invoice_id;
+end$$
+```
+
+sqlstate는 여러가지 종류가 존재합니다. 아래 링크에서 여러 종류의 sqlstate를 확인할 수 있습니다.
+
+https://www.ibm.com/support/knowledgecenter/ko/ssw_ibm_i_73/rzala/rzalaccl.htm
+
+해당 에러가 어떤 에러인지 메세지를 남기는 습관은 DB 설정할 때 권장되는 습관입니다.
+
