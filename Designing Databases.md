@@ -64,3 +64,9 @@ Primary Key는 해당 Table에서 각 record를 유일하게 구별하는 column
 
 두 table의 relationship을 정의할 때는 한 쪽은 parent, primary key table이 되고 다른 한 쪽은 child, foreign key table이 됩니다. foreign key는 다른 table의 primary key를 참조하고 있는 column입니다.
 
+### Foreign Key Constraints
+
+Table에 Foreign Key를 설정할 때마다 해당 Foreign Key에 Constraints를 설정해주어야 합니다. 이는 기본적으로 데이터가 망가지는 것을 방지해줄 것입니다.
+
+예를 들어 students table의 id가 2인 data의 id가 1로 바뀌었다고 가정해봅시다. 그럼 이 primary key를 참조하고 있는 모든 foreign key도 값이 바뀌어야 할 것입니다. update할 때 이를 cascade한다고 합니다. 이를 설정해 놓으면 자동으로 primary key가 바뀌면 foreign key값을 변경시켜줍니다. delete의 경우에는 (이 예시한에서) restrict합니다. 왜냐하면 delete을 cascade하면 회원이 나갈 경우 해당 정보가 없어져 이 강의로 얼마큼의 매출을 기록했나 등을 알 수 없어지기 때문입니다.
+
