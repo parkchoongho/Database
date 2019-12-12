@@ -70,3 +70,11 @@ Table에 Foreign Key를 설정할 때마다 해당 Foreign Key에 Constraints를
 
 예를 들어 students table의 id가 2인 data의 id가 1로 바뀌었다고 가정해봅시다. 그럼 이 primary key를 참조하고 있는 모든 foreign key도 값이 바뀌어야 할 것입니다. update할 때 이를 cascade한다고 합니다. 이를 설정해 놓으면 자동으로 primary key가 바뀌면 foreign key값을 변경시켜줍니다. delete의 경우에는 (이 예시한에서) restrict합니다. 왜냐하면 delete을 cascade하면 회원이 나갈 경우 해당 정보가 없어져 이 강의로 얼마큼의 매출을 기록했나 등을 알 수 없어지기 때문입니다.
 
+### Normalization
+
+우리는 우리가 설계한 Table이 redundant하고 중복되는 데이터를 허용하지 않기를 바랍니다. Redundancy는 데이터베이스의 크기를 증가시키고 insert, update, delete등의 기능들이 실행되는 시간들도 증가시킵니다.
+
+따라서 이런 것을 방지하고자 **Normalization**을 실행합니다. (DB 정규화) 정규화에는 7가지 Rule이 있고 각각의 rule은 앞에 rule이 적용되어 있다고 가정합니다. 그리고 대부분 99%의 appilcation들은 앞에 3가지 rule만 적용시켜도 됩니다.
+
+(1st Normal Form, 2nd Normal Form, 3rd Normal Form)
+
