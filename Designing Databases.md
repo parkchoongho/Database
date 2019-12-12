@@ -30,5 +30,23 @@ Data Modeling은 총 4가지 프로세스로 구성되어 있습니다.
 
 이 단계에서는 각 attribute가 어떻게 구성될 것인지에 대해 생각할 필요가 없습니다.
 
+### Logical Models
 
+위에서 만든 Conceptual Model을 통해 Logical Model을 만들어 보겠습니다. Logical Model은 좀 더 디테일한 abstract data model이라고 생각하시면 됩니다. Logical Model도 entity와 entity 사이의 관계들에 대해서 보여줍니다.
+
+각 Attribute의 데이터 타입 정하기. (그런데 varchar와 같이 세부적으로 정하지는 않는다.)
+
+특정 column을 더 쪼개서 저장할 수 없는지 살펴보기. (예를 들어, name의 경우에는 last name, first name 이렇게 나눌 수 있으므로 단순히 name으로만 저장하고 query를 날릴 경우 쿼리가 복잡해질 가능성 Up)
+
+#### Relationship
+
+- One-to-One
+- One-to-Many
+- Many-to-Many
+
+관계는 기본적으로 이 세가지를 기준으로 파생됩니다.
+
+만일 학생이 언제 강의를 등록했는지 알고 싶다면 해당 Attribute는 어디에 있어야 할까요? Student?, Coures? 둘다 아닌것 같습니다. Enroll이라는 새로운 Entity를 생성하고 거기에 Attribute를 만들겠습니다.
+
+[해당 ER Diagram](https://www.draw.io/?lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1#R7VhLU9swEP41mSmHdvxK4hwhCeUAHYZQQo%2FClm0NspWRZWLz67uyJT%2BTNExLaQdyyHi%2F3dVj99v1JiN7HudfOdpEV8zHdGQZfj6yFyPLmroWfEugqADHnlZAyIlfQWYDrMgzVqCh0Iz4OO0YCsaoIJsu6LEkwZ7oYIhztu2aBYx2d92gEA%2BAlYfoEF0TX0QV6lrTBr%2FAJIz0zuZkVmlipI3VTdII%2BWzbguzlyJ5zxkT1FOdzTGXsdFwqv%2FM92vpgHCfiGIc8frh7fL5bWg%2Fr72P3Qsyv7PVnlZ0nRDN14ZXIfLlidWZR6ECkWxJTlIB05kWE%2BpeoYJncOBXIe9TSWcQ4eWaJQBRUJgCg5kLl1TY6FivpCbBEA0LpnFHGy91sw3C9IJA4WLbw8%2FIDOGdZ4mNfbSKt1B6mo2V1dqM8BGePdQIt6Y9TsL%2FW0TNq6BKlQh9dZ0xqfZRG5X5SQJSECTx74I3haGcqjJgLnO%2FNj1lnHaoFsxgLXoCJctA8KbritmGdOVFY1GacNkSK6WG9ckMGeFB8eAE37AE3AsJT8Q3FGOBPEFOShCcjawJ5MWVUKDqkxTEidLfKRwLf4JCkEEyIMdhI5JbE%2BGTAQx16igNRZ1YzJGElQdtkUlC6QR7sell6LZweZyQjZPIIFP6p2kCwjSYFeqiZxJlAoiVDfjVdjuLA%2FiocEkMxwT6SCbPXIoI7IMIy4YzS%2BKNPvEWfcLqNwnTfvFPMBgSR9dur47raN5x4pTKgDIn3UeHuv13hetpqZXCQFuzDYKREuCwRxQ2mSBCWLBvNIOaRiHWF48Q%2FlRMZiMsbyNktu0JJUSrgDvcq3KXwQwpfrLGWF3lbuyi0lBNxr1eH58ptOlZi4yUF7VRdTN7mcAHC5VnGPfzrNyR0rhAfyv5sd%2Fbb6TZ2FawGeRnop%2B6Bd5FA7XHNiOzMumPY3YbhGD0aVfdUTu0JsreO2VvI7i9UBWKwUEnJ%2Bt6%2FwVLzLVn6B3kz%2Fj94M%2B69afrt51jeTMw9b6y%2FxBtnQJs5nDzFrzO7TD9ml72zizPpd5Dhi2%2B2i9HOa735xgNuQM%2Bge37CDCaXWkMSsM48ATnc6SlQmHY072DmcQ7PPNMjU2%2FYL049iM3%2FKlUXaf6cspc%2FAQ%3D%3D)
 
