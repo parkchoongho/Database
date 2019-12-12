@@ -56,3 +56,9 @@ Physical Model은 특정 database 기술로 Logical Model을 실제로 실행한
 
 여기서는 실제 어떠한 데이터 타입이 될것인지, NULL을 허용할 것인지, 등등을 설정합니다. 매우 많은 부분을 여기서 다루게 되니 다음 부분부터 모두 이 Physical Model에 해당하신다고 보면 되겠습니다.
 
+### Primary Key
+
+Primary Key는 해당 Table에서 각 record를 유일하게 구별하는 column입니다. Primary Key는 값이 변하지 않아야 합니다. 따라서 유일한 값인 email을 primary key로 설정하는 것은 좋지 않습니다. email은 나중에 바꿀 수도 있기 때문입니다.  
+
+
+
