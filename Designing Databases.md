@@ -58,7 +58,9 @@ Physical Model은 특정 database 기술로 Logical Model을 실제로 실행한
 
 ### Primary Key
 
-Primary Key는 해당 Table에서 각 record를 유일하게 구별하는 column입니다. Primary Key는 값이 변하지 않아야 합니다. 따라서 유일한 값인 email을 primary key로 설정하는 것은 좋지 않습니다. email은 나중에 바꿀 수도 있기 때문입니다.  
+Primary Key는 해당 Table에서 각 record를 유일하게 구별하는 column입니다. Primary Key는 값이 변하지 않아야 합니다. 따라서 유일한 값인 email을 primary key로 설정하는 것은 좋지 않습니다. email은 나중에 바꿀 수도 있기 때문입니다. 2개의 column을 묶어서 composite primary key를 만들수도 있습니다.
 
+### Foreign Key
 
+두 table의 relationship을 정의할 때는 한 쪽은 parent, primary key table이 되고 다른 한 쪽은 child, foreign key table이 됩니다. foreign key는 다른 table의 primary key를 참조하고 있는 column입니다.
 
