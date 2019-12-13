@@ -86,5 +86,7 @@ Each cell should have a **single value** and we cannot have repeated columns.
 
 ### Link Tables
 
-이제 강의 table과 태그 table 사이에 many-to-many relationship을 맺어야합니다. 관계형 데이터베이스에서는 many-to-many relationship이 존재하지 않습니다. 따라서 중간에 한개의 table을 생성해 각각 one-to-many relationship을 설정해야 합니다. 이렇게 중간에 설정되어있는 table을 length table이라고 합니다.
+이제 강의 table과 태그 table 사이에 many-to-many relationship을 맺어야합니다. 관계형 데이터베이스에서는 many-to-many relationship이 존재하지 않습니다. 따라서 중간에 한개의 table을 생성해 각각 one-to-many relationship을 설정해야 합니다. 이렇게 중간에 설정되어있는 table을 link table이라고 합니다.
+
+### 2NF - Second Normal Form
 
