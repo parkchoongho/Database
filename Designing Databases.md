@@ -78,3 +78,8 @@ Table에 Foreign Key를 설정할 때마다 해당 Foreign Key에 Constraints를
 
 (1st Normal Form, 2nd Normal Form, 3rd Normal Form)
 
+### 1NF - First Normal Form
+
+Each cell should have a **single value** and we cannot have repeated columns. 
+
+예를 들어 한 강의가 많은 tags를 가지고 있다고 해봅시다. tags column에는 복수의 값이 들어가므로 First Normal Form에 위배됩니다. 이를 여러개의 tag column으로 바꾸려고 하니 한 강의가 몇개의 tag를 가질지를 미리 정해놓아야 합니다. 따라서 해당 column을 빼서 하나의 table로 만드는 것이 더 나을 것 같습니다.
