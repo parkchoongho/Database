@@ -90,3 +90,17 @@ Each cell should have a **single value** and we cannot have repeated columns.
 
 ### 2NF - Second Normal Form
 
+Second Normal Form을 충족시키기 위해서는 2가지 조건을 충족시켜야합니다.
+
+- First Normal Form을 만족시키고 있을것
+- Every **Table** should describe **one entity**, and every column in that table should describe that entity. 
+
+| order_id | date | customer_name |
+| -------- | ---- | ------------- |
+| 1        | ...  | Mosh          |
+|          |      |               |
+|          |      |               |
+|          |      |               |
+
+여기서 customer_name은 orders 테이블을 묘사하는 column이 아닙니다. 왜냐하면 해당 column은 customer을 의미하지, orders를 의미하는게 아니기 때문입니다. 따라서 customer table을 따로 만든다음 해당 table을 참조하게끔 table을 만들어야 Second Normal Form을 충족시킬 수 있습니다.
+
