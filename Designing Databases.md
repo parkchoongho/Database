@@ -104,3 +104,18 @@ Second Normal Form을 충족시키기 위해서는 2가지 조건을 충족시�
 
 여기서 customer_name은 orders 테이블을 묘사하는 column이 아닙니다. 왜냐하면 해당 column은 customer을 의미하지, orders를 의미하는게 아니기 때문입니다. 따라서 customer table을 따로 만든다음 해당 table을 참조하게끔 table을 만들어야 Second Normal Form을 충족시킬 수 있습니다.
 
+### 3NF - Third Normal Form
+
+Third Normal Form을 충족시키기 위해서는 2가지 조건을 충족시켜야합니다.
+
+- Second Normal Form을 만족시키고 있을것
+- A column in a table should not be derived from other columns
+
+예를 들어 invoices table을 가정해 봅시다.
+
+| ...  | invoice_total | payment_total | balance |
+| ---- | ------------- | ------------- | ------- |
+|      | 100           | 40            | 60      |
+|      |               |               |         |
+
+해당 balance table은 invoice_total과 payment_total에서 비롯된 column입니다. 따라서 **Third Normal Form**을 충족하지 않는 Table이므로 balance column을 제거하는 것이 옳은 선택입니다.
