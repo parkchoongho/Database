@@ -119,3 +119,14 @@ Third Normal Form을 충족시키기 위해서는 2가지 조건을 충족시켜
 |      |               |               |         |
 
 해당 balance table은 invoice_total과 payment_total에서 비롯된 column입니다. 따라서 **Third Normal Form**을 충족하지 않는 Table이므로 balance column을 제거하는 것이 옳은 선택입니다.
+
+### Don't Model the Universe
+
+현업에서 일을 하다보면, 지나치게 데이터베이스를 general하게 생성하는 경우가 있습니다. 미래에 이러한 요구사항이 있을 것이다! 이렇게 예측하면서 table을 만들기도 합니다. 이는 매우 적합하지 않는 DB 설계입니다. 좋은 DB 설계란, 미래의 요구사항을 예측해서 하는 것이 아닌 지금 현 상황에 맞는 DB를 만드는 것입니다.
+
+#### Solve today's problems, not future problems that may never happen
+
+#### Build a model for your problem domain, not the real world
+
+
+
