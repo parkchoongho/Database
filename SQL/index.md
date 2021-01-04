@@ -105,3 +105,58 @@ CREATE TABLE Reserves (
 - Foreign key references a table
     - Via the primary key of that table
 - Need not share the name of the referenced primary key
+
+### Basic Single-Table Queries
+```sql
+SELECT [DISTINCT] <column expression list>
+    FROM <single table>
+    [WHERE <predicate>]
+```
+- Simplest version is straightforward
+    - Produce all tuples in the table that satisfy the predicate
+    - Output the expressions in the SELECT list
+    - Expression can be a column reference, or an arithmetic expression over column refs
+
+### SELECT DISTINCT
+```sql
+SELECT DISTINCT S.name, S.gpa
+    FROM student S
+    WHERE S.dept = 'CS'
+```
+- DISTINCT specifies removal of duplicate rows before output
+- Can refer to the student table as "S", this is called an alias
+
+### ORDER BY
+```sql
+SELECT S.name, S.gpa, S.age*2, AS a2
+FROM Student S
+WHERE S.dept = 'CS'
+ORDER BY S.gpa, S.name, a2
+```
+- ORDER BY clause specifies output to be sorted
+    - *Lexicographic* ordering: gpa -> name -> a2
+- Obviously must refer to columns in the ouput
+    - Note the AS clause for naming output columns!
+
+```sql
+SELECT S.name, S.gpa, S.age*2, AS a2
+FROM Student S
+WHERE S.dept = 'CS'
+ORDER BY S.gpa DESC, S.name ASC, a2
+```
+- Ascending order by default, but can be overridden
+    - DESC flag for descending, ASC for ascending
+    - Can mix and match, lexicographically
+
+### LIMIT
+```sql
+SELECT S.name, S.gpa, S.age*2, AS a2
+FROM Student S
+WHERE S.dept = 'CS'
+ORDER BY S.gpa DESC, S.name ASC, a2
+LIMIT 3
+```
+- Only produces the first <integer> output rows
+- Typically used with ORDER BY
+    - Otherwise the output is non-deterministic
+    - Not a "pure" declarative construct in that case - output set depends on algorithm for query processing
