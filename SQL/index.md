@@ -160,3 +160,40 @@ LIMIT 3
 - Typically used with ORDER BY
     - Otherwise the output is non-deterministic
     - Not a "pure" declarative construct in that case - output set depends on algorithm for query processing
+
+### Aggregates
+```sql
+SELECT [DISTINCT] AVG(S.gpa)
+FROM Student S
+WHERE S.dept = 'CS'
+```
+- Before producing output, compute a summary(a.k.a. an aggregate) of some arithmetic expression
+- Produces 1 row of output
+    - with one column in this case
+- Other aggregations: SUM, COUNT, MAX, MIN
+
+### GROUP BY
+```sql
+SELECT [DISTINCT] AVG(S.gpa), S.dept
+FROM Student S
+GROUP BY S.dept
+```
+- Partition table into groups with same GROUP BY column values
+    - Can group by a list of columns
+- Produce an aggregate result per group
+    - Cardinality of output = # of distinct group values
+- Note: can put grouping columns in SELECT list
+
+### HAVING
+```sql
+SELECT [DISTINCT] AVG(S.gpa), S.dept
+FROM Student S
+GROUP BY S.dept
+HAVING COUNT(*) > 2
+```
+- The HAVING predicate filters groups
+- HAVING is applied after grouping and aggregation
+    - Hence can contain anything that could go in the SELECT list
+    - i.e. aggs or GROUP BY columns
+- HAVING can only be used in aggregate queries
+- It's an optional clause
