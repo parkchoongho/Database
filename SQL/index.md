@@ -197,3 +197,20 @@ HAVING COUNT(*) > 2
     - i.e. aggs or GROUP BY columns
 - HAVING can only be used in aggregate queries
 - It's an optional clause
+
+### SQL DML: General Basic Single-Table Queries
+```sql
+SELECT [DISTINCT] <column expression list>
+FROM <single table>
+[WHERE <predicate>]
+[GROUP BY <column list>]
+[HAVING <predicate>]
+[ORDER BY <column list>]
+[LIMIT <integer>];
+```
+
+### Summary
+- Relational model has **well-defined query semantics**
+- Modern SQL extends "pure" relational model (duplicate rows, aggregates, ordering output)
+- Typically, many ways to write a query
+    - DBMS figures out a fast way to execute a query, regardless of how it is written
