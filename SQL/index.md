@@ -1,4 +1,4 @@
-# SQL
+# SQLI
 ## Sequel Query Language
 ### Pros and Cons
 - Declarative
@@ -214,3 +214,29 @@ FROM <single table>
 - Modern SQL extends "pure" relational model (duplicate rows, aggregates, ordering output)
 - Typically, many ways to write a query
     - DBMS figures out a fast way to execute a query, regardless of how it is written
+
+# SQL II
+## Sequel Query Language
+### SQL DML 1: Basic Single-Table Queries
+
+```sql
+SELECT [DISTINCT] <column expression list>
+FROM <single table>
+[WHERE <predicate>]
+[GROUP BY <column list>]
+[HAVING <predicate>]
+[ORDER BY <column list>]
+[LIMIT <integer>]
+```
+
+![File (2)](https://user-images.githubusercontent.com/34790763/103899034-22935a00-5139-11eb-913a-a06544a274bc.jpg)
+
+### Example
+```sql
+SELECT S.dept, AVG(S.gpa), COUNT(*)
+FROM Students S
+WHERE S.gender='F'
+GROUP BY S.dept
+HAVING COUNT(*) >= 2
+ORDER BY S.dept
+```
