@@ -240,3 +240,34 @@ GROUP BY S.dept
 HAVING COUNT(*) >= 2
 ORDER BY S.dept
 ```
+
+### Join Queries
+```sql
+SELECT [DISTINCT] <column expression list>
+FROM <table1 [AS t1], ... , tableN [AS tn]>
+[WHERE <predicate>]
+[GROUP BY <column list> [HAVING <predicate>]]
+[ORDER BY <column list>]
+```
+
+### Column Names and Table Aliases
+```sql
+SELECT Sailors.sid, sname, bid
+FROM Sailors, Reserves
+WHERE Sailors.sid = Reserves.sid
+```
+```sql
+SELECT S.sid, sname, bid
+FROM Sailors AS S, Reserves AS R
+WHERE S.sid = R.sid
+```
+
+### More Aliases
+```sql
+SELECT x.name, x.age, y.sname AS sname2, y.age AS age2
+FROM Sailors AS x, Sailors AS y
+WHERE x.age > y.age
+```
+- Table aliases in the FROM clause
+    - Needed when the same table used multiple times ("self-join")
+    - Column aliases in the SELECT clause
