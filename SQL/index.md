@@ -271,3 +271,40 @@ WHERE x.age > y.age
 - Table aliases in the FROM clause
     - Needed when the same table used multiple times ("self-join")
     - Column aliases in the SELECT clause
+
+### Arithmetic Expressions
+```sql
+SELECT S.age, S.age - 5 AS age1, 2*S.age AS age2
+FROM Sailors AS S
+WHERE S.sname = 'Popeye'
+
+SELECT S1.sname AS name1, S2.sname AS name2
+FROM Sailors AS S1, Sailors AS S2
+WHERE 2*S1.rating = S2.rating - 1
+```
+
+### SQL Calculator
+```sql
+SELECT
+    log(1000) as three,
+    exp(ln(2)) as two
+    cos(0) as one,
+    ln(2*3) = ln(2) + ln(3) as sanity
+```
+
+### String Comparisons
+- Old-school SQL
+
+```sql
+SELECT S.sname
+FROM Sailors S
+WHERE S.sname LIKE 'B_%'
+```
+
+- Standard Regulat Expressions
+
+```sql
+SELECT S.sname
+FROM Sailors S
+WHERE S.sname ~ 'B.*'
+```
